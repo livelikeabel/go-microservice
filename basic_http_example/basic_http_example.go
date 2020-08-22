@@ -1,10 +1,15 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 )
+
+type helloWorldResponse struct {
+	Message string `json:"message"`
+}
 
 func main() {
 	port := 8080
@@ -16,5 +21,8 @@ func main() {
 }
 
 func helloWorldHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Hello World\n")
+	response := helloWorldResponse{Message: "Hello World"}
+	
+	encoder := json.NewEncoder(w)
+	encoder.Encode(response)
 }
